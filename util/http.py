@@ -49,7 +49,8 @@ def request(
             return response
         except Exception as e:
             log_info_exception = log_info + f", target_status={target_status}"
-            if response := locals().get("response") is not None:
+            local_response = locals().get("response")
+            if isinstance(local_response, Response):
                 if isinstance(response.content, str):
                     log_info_exception += f", response_content={response.content}"
                 elif isinstance(response.content, bytes) and str(response.content).isprintable():

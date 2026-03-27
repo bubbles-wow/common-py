@@ -65,6 +65,17 @@ class BaseEntity:
             origin_type = get_origin(field.type)
             actual_types = get_args(field.type) if origin_type is Union else (field.type,)
             
+            if isinstance(actual_types, tuple):
+                matched = False
+                for actual_type in actual_types:
+                    if isinstance(actual_type, type) and actual_type is not type(None):
+                        if isinstance(val, actual_type):
+                            init_data[field.name] = val
+                            matched = True
+                            break
+                if matched:
+                    continue
+            
             base_type = next((t for t in actual_types if t is not type(None)), field.type)
             base_origin = get_origin(base_type) or base_type
 

@@ -1,9 +1,7 @@
 import yaml
-import json
 import os
 import re
 
-from types import SimpleNamespace
 from typing import Any
 
 def load_config_as_obj(file_path: str) -> Any:
@@ -25,7 +23,8 @@ def load_config_as_obj(file_path: str) -> Any:
     with open(file_path, 'r', encoding='utf-8') as f:
         data = yaml.safe_load(f)
         if data is None:
-            return SimpleNamespace()
+            return {}
         
         data = replace_env_vars(data)
-        return json.loads(json.dumps(data), object_hook=lambda d: SimpleNamespace(**d))
+        del data[".template"]
+        return data

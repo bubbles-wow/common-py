@@ -1,5 +1,6 @@
 from string import *
 
+import json
 import base64
 
 def safe_to_string(data: bytes | str) -> str:
@@ -11,6 +12,11 @@ def safe_to_string(data: bytes | str) -> str:
         except (UnicodeDecodeError, AttributeError):
             encoded = base64.b64encode(data).decode('ascii')
             return f"(base64_encoded={encoded})"
+    if isinstance(data, (dict, list)):
+        try:
+            return json.dumps(data, ensure_ascii=False)
+        except (TypeError, ValueError):
+            return str(data)
     
     try:
         return str(data)

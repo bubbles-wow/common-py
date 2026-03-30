@@ -26,5 +26,6 @@ def load_config_as_obj(file_path: str) -> Any:
             return {}
         
         data = replace_env_vars(data)
-        del data[".template"]
+        if isinstance(data, dict) and ".template" in data:
+            del data[".template"]
         return data

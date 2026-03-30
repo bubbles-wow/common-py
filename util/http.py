@@ -1,11 +1,10 @@
 import time
-import base64
 import random
 
-from . import string
 from typing import Any, Callable, Optional
 from requests import Session, Response
 from logging import Logger
+from . import string
 
 def request(
     logger: Logger, 

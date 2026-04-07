@@ -47,3 +47,11 @@ class CustomLogger(Logger):
         
     def debug(self, code: int, message: str) -> None:
         super().debug(message, extra={"code": code})
+
+    def set_name(self, name: str) -> None:
+        self.name = name
+        for handler in self.handlers[:]:
+            self.removeHandler(handler)
+        self.init_handlers()
+        
+logger = CustomLogger("main")

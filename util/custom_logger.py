@@ -10,7 +10,12 @@ class CustomLogger(Logger):
             level = root.level
         super().__init__(name, level)
         self.init_handlers()
-        
+
+    def setLevel(self, level: int | str) -> None:
+        super().setLevel(level)
+        for handler in self.handlers:
+            handler.setLevel(level)
+
     def init_handlers(self) -> None:
         if self.handlers:
             return

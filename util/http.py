@@ -28,8 +28,8 @@ def request(
                 raise ValueError(f"Unexpected status code: {response.status_code}")
             
             if data_verify and not data_verify(response):
-                log_info_dv = log_info + f", target_status={target_status}, response_content={string.safe_to_string(response.content)}"
-                logger.warning(93, f"Data verification failed for response. ({log_info_dv})")
+                # log_info_dv = log_info + f", target_status={target_status}, response_content={string.safe_to_string(response.content)}"
+                # logger.warning(93, f"Data verification failed for response. ({log_info_dv})")
                 return None
             
             return response

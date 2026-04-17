@@ -68,7 +68,7 @@ class BaseEntity:
             if isinstance(actual_types, tuple):
                 matched = False
                 for actual_type in actual_types:
-                    if isinstance(actual_type, type) and actual_type is not type(None):
+                    if isinstance(actual_type, type) and actual_type is not Any and actual_type is not type(None):
                         if isinstance(val, actual_type):
                             init_data[field.name] = val
                             matched = True

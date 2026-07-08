@@ -113,6 +113,8 @@ class BaseEntity:
     def to_dict(self) -> Dict[str, Any]:
         result = {}
         for field in fields(self):
+            if field.name not in vars(self):
+                continue
             value = getattr(self, field.name)
             result[field.name] = self._serialize_value(value)
         return result

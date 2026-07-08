@@ -1,0 +1,12 @@
+data/
+logs/
+__pycache__/
+*/__pycache__/
+*.pyc
+venv/
+.env
+test_*
+session/
+*.session
+dist*
+.vscode/

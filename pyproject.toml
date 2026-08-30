@@ -1,0 +1,20 @@
+[project]
+name = "common-py"
+version = "0.1.2"
+description = "common lib for python project"
+readme = "README.md"
+authors = [
+    { name = "bubbles_wow", email = "bubbles_wow@outlook.com" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "pyyaml>=6.0.3",
+    "requests>=2.32.5"
+]
+
+[build-system]
+requires = ["uv_build>=0.12.7,<0.13.0"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "common"

@@ -6,6 +6,14 @@ from requests import Session, Response
 from logging import Logger
 from . import string
 
+def get_session() -> Session:
+    session = Session()
+    session.verify = False
+    session.headers.update({
+        "User-Agent": "libhttpclient/1.0.0.0",
+    })
+    return session
+
 def request(
     logger: Logger, 
     session: Session, 

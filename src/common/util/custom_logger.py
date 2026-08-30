@@ -1,12 +1,30 @@
-import os
-
 from pathlib import Path
 from logging.handlers import RotatingFileHandler
 from logging import Logger, StreamHandler, root
 
 from .precision_formatter import PrecisionFormatter
 
+_log_path = Path.cwd() / "logs"
+_logger = None
+
 class CustomLogger(Logger):
+    @classmethod
+    def set_global_log_path(cls, log_path: Path) -> None:
+        global _log_path
+        _log_path = log_path
+        cls.refresh_global_logger()
+        
+    @classmethod
+    def refresh_global_logger(cls) -> None:
+        global _logger
+        _logger = CustomLogger("main")
+        
+    @classmethod
+    def get_default_logger(cls) -> "CustomLogger":
+        if _logger is None:
+            cls.refresh_global_logger()
+        return _logger
+    
     def __init__(self, name: str, level: int = None) -> None:
         if level is None:
             level = root.level
@@ -25,7 +43,7 @@ class CustomLogger(Logger):
         console_handler = StreamHandler()
         console_handler.setLevel(self.level)
 
-        log_dir = Path(os.environ.get("LOG_PATH") or Path.cwd()) / "logs"
+        log_dir = _log_path
         log_dir.mkdir(parents=True, exist_ok=True)
         
         file_handler = RotatingFileHandler(
@@ -60,5 +78,3 @@ class CustomLogger(Logger):
         for handler in self.handlers[:]:
             self.removeHandler(handler)
         self.init_handlers()
-        
-logger = CustomLogger("main")

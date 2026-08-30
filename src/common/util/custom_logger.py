@@ -1,3 +1,5 @@
+import os
+
 from pathlib import Path
 from logging.handlers import RotatingFileHandler
 from logging import Logger, StreamHandler, root
@@ -23,7 +25,7 @@ class CustomLogger(Logger):
         console_handler = StreamHandler()
         console_handler.setLevel(self.level)
 
-        log_dir = Path.cwd() / "logs"
+        log_dir = Path(os.environ.get("LOG_PATH") or Path.cwd()) / "logs"
         log_dir.mkdir(parents=True, exist_ok=True)
         
         file_handler = RotatingFileHandler(
